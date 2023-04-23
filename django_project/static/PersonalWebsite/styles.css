@@ -1,0 +1,298 @@
+#title {
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e8e8e8;
+}
+
+.about {
+    text-align: center;
+}
+
+.anchor {
+    scroll-margin-top: 60px;
+}
+
+.background-pic {
+    background-image: url("images/haceta_head_lighthouse.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.coming-soon {
+    padding-top: 3rem;
+    padding-bottom: 3 rem;
+}
+
+.contact-email {
+    color: black;
+}
+
+.contact-form {
+    text-align: left;
+}
+
+.csu-logo {
+    width: 80px;
+}
+
+.cplusplus {
+    width: 20%;
+}
+
+.css {
+    width: 15%;
+}
+
+.dark-section {
+    background-color: #292b2c;
+    color: white;
+}
+
+.filled-skill-bar {
+    background-color: #506584;
+    border-radius: 1rem;
+    padding-right: 2%;
+}
+
+.hei-logo {
+    width: 180px;
+}
+
+.html {
+    width: 30%;
+}
+
+.java {
+    width: 40%;
+}
+
+.javascript {
+    width: 15%;
+}
+
+.light-section {
+    background-color: #faf7ef;
+}
+
+.profile-pic {
+    border-radius: 8%;
+    width: 180px;
+    text-align: center;
+}
+
+.python {
+    width: 40%;
+}
+
+.sbwc-logo {
+    width: 120px; 
+}
+
+.site-width {
+    padding: 1% 15%;
+}
+
+.skills {
+    text-align: right;
+    background-color: #ddd;
+    color: white;
+    border-radius: 1rem;
+}
+
+.skills-p {
+    padding-top: 1rem;
+}
+
+.skills-container {
+    text-align: left;
+    width: 70%;
+}
+
+.skill-img {
+    padding: 1rem;
+    color: #506584;
+}
+
+.social-icon {
+    margin: 20px 20px;
+}
+
+.title-name {
+    font-size: 4rem;
+}
+
+.title-text {
+    text-align: center;
+    padding: 20%;
+}
+
+.q-stats {
+    padding: 4% 0 2% 0;
+}
+
+.vertical-center {
+    vertical-align: middle;
+}
+
+/*Bootstrap classes adjusted for transparent navbar*/
+.navbar {
+    -webkit-transition: all 0.6s ease-out;
+    -moz-transition: all 0.6s ease-out;
+    -o-transition: all 0.6s ease-out;
+    -ms-transition: all 0.6s ease-out;
+    transition: all 0.6s ease-out;
+}
+
+.navbar.scrolled {
+    background: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/*Timeline CSS*/
+
+
+.timeline {
+    margin: 0;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: auto;
+    color: white;
+}
+
+.timeline__component {
+    margin: 0 20px 20px 20px;
+}
+
+.timeline__component--bg {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.timeline__component--bottom {
+    margin-bottom: 0;
+}
+
+.timeline__component--left {
+    margin: 0 20px 20px 20px;
+}
+
+.timeline__date--right {
+    text-align: right;
+}
+
+.timeline__middle {
+    position: relative;
+    background: rgba(0, 0, 0, 0);
+}
+
+.timeline__point {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 50%;
+}
+
+.timeline__point--bottom {
+    top: initial;
+    bottom: 0;
+}
+
+.timeline__title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+.timeline__paragraph {
+    line-height: 1.5;
+}
+
+/*Changes in styling based on screen size*/
+
+@media (min-width:845px) {
+    .about {
+        text-align: left;
+    }
+
+    .contact-form {
+        padding: 0 15%;
+    }
+
+    .navbar {
+        -webkit-transition: all 0.6s ease-out;
+        -moz-transition: all 0.6s ease-out;
+        -o-transition: all 0.6s ease-out;
+        -ms-transition: all 0.6s ease-out;
+        transition: all 0.6s ease-out;
+    }
+    
+    .navbar.scrolled {
+        background: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .timeline {
+        grid-template-columns: 1fr 3px 1fr;
+    }
+
+    .timeline__middle {
+        background: white;
+    }
+    
+    .timeline__point {
+        background: white;
+    }
+}
+
+@media (min-width: 1120px) {
+    .bio {
+        font-size: medium;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+
+    .profile-pic {
+        border-radius: 8%;
+        width: 240px;
+    }
+
+    .title-name {
+        font-size: 7rem;
+    }
+
+}
+
+@media (min-width: 1476px) {
+
+    .bio {
+        font-size: larger;
+        padding-bottom: 2%;
+    }
+
+    .timeline__component {
+        margin: 0 20% 20px 20px;
+    }
+
+    .timeline__component--left {
+        margin: 0 20px 20px 20%;
+    }
+}
