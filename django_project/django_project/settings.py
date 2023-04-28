@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpages',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Webpack loader for React Project
+WEBPACK_LOADER = {
+  "DEFAULT": {
+    "BUNDLE_DIR_NAME": "GroceryApp/",
+    "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json")
+  }
+}
