@@ -1,3 +1,9 @@
-.red {
-    color: #fd0101;
+.body {
+    position: relative;
+    z-index: 1;
+}
+
+.store-search-page {
+    padding: 40% 0;
+    text-align: center;
 }
