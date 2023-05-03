@@ -1,9 +1,29 @@
+$base-color: #B5F1CC;
+$secondary-color: #E5FDD1;
+$third-color: #C9F4AA;
+$accent-color: #FCC2FC;
+
 .body {
     position: relative;
     z-index: 1;
+    background-color: $base-color;
+}
+
+.header{
+    background-color: $base-color;
+    text-align: right;
+}
+
+.header-icon {
+    margin: 3% 5% 0 5%;
 }
 
 .store-search-page {
-    padding: 40% 0;
-    text-align: center;
+    padding: 30% 0;
+    text-align: center !important;
+}
+
+.store-input-width {
+    width: 50%;
+    margin: auto;
 }
