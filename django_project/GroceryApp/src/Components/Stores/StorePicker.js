@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import "react-icons/fa"
 
@@ -7,15 +6,7 @@ export default function StorePicker(props) {
   const [zipCode, setZipCode] = useState("")
   return (
     <div className='store-search-page'>
-      <p>The selected store is: {props.storeName}</p>
-      <p>The entered zip code is {zipCode}</p>
       <StoreFinderForm zipCode={zipCode} setZipCode={setZipCode}/>
-      <Button 
-        variant='dark'
-        onClick={ () => props.setShowList(!props.showList)}
-      >
-        Cancel
-      </Button>
     </div>
 )}
 

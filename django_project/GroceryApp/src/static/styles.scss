@@ -3,14 +3,16 @@ $secondary-color: #E5FDD1;
 $third-color: #C9F4AA;
 $accent-color: #FCC2FC;
 
-.body {
-    position: relative;
-    z-index: 1;
+.app-background {
     background-color: $base-color;
 }
 
+.body {
+    position: relative;
+    z-index: 1;
+}
+
 .header{
-    background-color: $base-color;
     text-align: right;
 }
 
@@ -19,7 +21,7 @@ $accent-color: #FCC2FC;
 }
 
 .store-search-page {
-    padding: 30% 0;
+    padding: 20% 0;
     text-align: center !important;
 }
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Collapse from 'react-bootstrap/Collapse'
-import StorePicker from './Stores/StorePicker'
-import List from './List/List'
+import StorePicker from './Components/Stores/StorePicker'
+import List from './Components/List/List'
 import Container from 'react-bootstrap/esm/Container'
-import Header from './header/header'
+import Header from './Components/header/header'
 
 export default function App() {
   const [showList, setShowList] = useState(false)
@@ -17,10 +17,10 @@ export default function App() {
     storeID, setStoreID
   }
   return (
-    <>
+    <div className='app-background'>
       <Header {...context}/>
       <Planner {...context}/>
-    </>
+    </div>
   )
 }
 
