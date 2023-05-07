@@ -2,5 +2,5 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("stores/",views.stores_request)
+    path("locations/",views.locations_response)
 ]

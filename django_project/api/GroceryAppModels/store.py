@@ -1,6 +1,4 @@
-from django.db import models
-
-class Address():
+class Address(dict):
     street_address = ""
     city = ""
     state = ""
@@ -13,11 +11,12 @@ class Address():
         self.state = state
         self.zipcode = zipcode
         self.county = county
+        dict.__init__(self, street_address=street_address, city=city, state=state, zipcode=zipcode, county=county)
 
     def __str__(self):
         return self.streetAddress + ", " + self.city + ", " + self.state + ", " + self.zipcode
 
-class Store():
+class Store(dict):
     location_id = ""
     chain = ""
     name = ""
@@ -28,6 +27,7 @@ class Store():
         self.chain = chain
         self.name = name
         self.address = address
+        dict.__init__(self,location_id=location_id, chain=chain, name=name, address=address)
 
     def __str__(self):
         return self.name

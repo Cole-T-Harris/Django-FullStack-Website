@@ -1,20 +1,20 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "stores",
-    "description": "stores request/response",
+    "title": "locations",
+    "description": "locations request/response",
     "type": "object",
     "properties": {
       "requestType": {
         "description": "the type of api request",
         "type": "string",
-        "pattern":"^stores$"
+        "pattern":"^locations$"
       },
-      "near": {
+      "zipCode.near": {
         "description": "zipcode to search near",
         "type": "string",
         "pattern": "^[0-9]{5}(?:-[0-9]{4})?$"
       },
-      "radius": {
+      "radiusInMiles": {
         "description": "radius to search from near",
         "type": "number",
         "minimum": 1
@@ -27,8 +27,8 @@
     },
     "required": [
       "requestType",
-      "near",
-      "radius",
+      "zipCode.near",
+      "radiusInMiles",
       "limit"
     ],
     "additionalProperties": false
