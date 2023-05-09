@@ -2,12 +2,7 @@ from .store import Store, Address
 from .external_api_request import make_api_request
 
 def build_response(request):
-    response = {
-        "requestType": request['requestType'],
-        "zipCode.near": request['zipCode.near'],
-        "radiusInMiles": request['radiusInMiles'], 
-        "limit": request['limit']
-    }
+    response = request
     locations = []
     locations_response = make_api_request("locations", response)
     if locations_response:

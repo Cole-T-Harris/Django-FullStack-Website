@@ -28,8 +28,6 @@ def get_access_token(token_cache_key):
     return {'Accept': 'application/json', 'Authorization': 'Bearer {}'.format(token)}
 
 def make_api_request(type, filters):
-    #Remove requestType
-    filters.pop("requestType")
     url = BASE_KROGER_URL + type + "?"
     for filter_type, filter_value in filters.items():
         if not isinstance(filter_value, str):
