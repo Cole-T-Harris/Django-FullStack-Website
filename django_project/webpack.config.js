@@ -11,6 +11,7 @@ module.exports = {
     filename: '[name]-[hash].js',
     publicPath: '/static/GroceryApp/',
   },
+  devtool: "source-map",
   plugins: [
     new CleanWebpackPlugin(),
     new BundleTracker({
