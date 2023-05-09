@@ -1,15 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError, HttpResponse
 import json
-import os
-import jsonschema
 import logging
 from .GroceryAppModels import locations_request
 
 VALID_LOCATIONS_KEYS = {"zipCode.near", "radiusInMiles", "limit"}
 REQUESTTYPE_PARAMS = {"locations": VALID_LOCATIONS_KEYS}
 
-def validate_GET(request_data, request_type):
+def validate_get_request(request_data, request_type):
     if request_type not in REQUESTTYPE_PARAMS:
         raise ValueError
     for key in request_data:
@@ -21,7 +19,7 @@ def build_json_response(request, type, build_response):
             data = {}
             for key, value in request.GET.items():
                 data[key] = value
-            validate_GET(data, type)
+            validate_get_request(data, type)
             logging.info(data)
             response = build_response(data)
         except json.JSONDecodeError:

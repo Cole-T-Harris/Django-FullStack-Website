@@ -45,7 +45,7 @@ export function getOriginalServerUrl() {
     const serverProtocol = location.protocol;
     const serverHost = location.hostname;
     const serverPort = location.port;
-    return `${serverProtocol}\/\/${serverHost}:${serverPort}`;
+    return `${serverProtocol}//${serverHost}:${serverPort}`;
 }
 
 export function isJsonResponseValid(object, schema) {
