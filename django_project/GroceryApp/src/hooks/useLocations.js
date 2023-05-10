@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import { getOriginalServerUrl, sendGETAPIRequest } from "../utils/restfulAPI";
 import { LOCATIONS_LIMIT, LOG, ZIPCODE_REGEX } from "../utils/constants";
 import { Location } from "../models/location.model";
+import { getByZipCode } from "zips"
 
 export function useLocations(zipCode, radiusInMiles) {
     const [locations, setLocations] = useState([])
+    const [invalidZipCode, setInvalidZipCode] = useState()
     const storeAPIInfo = {
         zipCode, radiusInMiles,
         stores: locations, setLocations: setLocations
     }
     useEffect(() => {
-        if (ZIPCODE_REGEX.test(zipCode)) {
+        if (isValidZipCode(zipCode)) {
+            setInvalidZipCode(false)
             makeStoreAPIRequest(storeAPIInfo)
+        }
+        else {
+            setInvalidZipCode(zipCode.length >= 5)
         }
     }, [zipCode, radiusInMiles])
 
-    return {locations: locations, setLocations: setLocations}
+    return {locations: locations, setLocations: setLocations, invalidZipCode: invalidZipCode}
 }
 
 async function makeStoreAPIRequest(info) {
@@ -40,4 +46,9 @@ function makeLocationsList(locationsResponse) {
         locations.push(new Location(location))
     }
     return locations
+}
+
+function isValidZipCode(zipCode) {
+    const zipCodeObject = getByZipCode(zipCode)
+    return !!(ZIPCODE_REGEX.test(zipCode) && zipCodeObject);
 }

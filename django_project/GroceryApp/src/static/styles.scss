@@ -26,6 +26,12 @@ $accent-color: #FCC2FC;
 }
 
 .store-input-width {
-    width: 50%;
+    width: 70%;
     margin: auto;
+}
+
+@media screen and (min-width: 1200px) {
+    .store-input-width {
+        width: 50%;
+    }
 }
