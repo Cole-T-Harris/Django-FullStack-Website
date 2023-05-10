@@ -4,6 +4,7 @@ import StorePicker from './Components/Stores/StorePicker'
 import List from './Components/List/List'
 import Container from 'react-bootstrap/esm/Container'
 import Header from './Components/header/header'
+import {Helmet} from "react-helmet"
 
 export default function App() {
   const [showList, setShowList] = useState(false)
@@ -18,6 +19,9 @@ export default function App() {
   }
   return (
     <div className='app-background'>
+      <Helmet>
+        <style>{'body {background-color: #B5F1CC; '}</style>
+      </Helmet>
       <Header {...context}/>
       <Planner {...context}/>
     </div>
