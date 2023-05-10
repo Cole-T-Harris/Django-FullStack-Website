@@ -135,3 +135,18 @@ WEBPACK_LOADER = {
     "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json")
   }
 }
+
+#Server Logging
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers\
+    "handlers" : {
+        "console" : {
+            "class" : "logging.StreamHandler",
+        },
+    },
+    "root" : {
+        "handlers" : ["console"],
+        "level": "DEBUG",
+    }
+}
