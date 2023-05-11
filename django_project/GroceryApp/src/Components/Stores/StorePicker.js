@@ -76,7 +76,7 @@ function StoreResultsTable(props) {
         {props.locations.map((location, index) => (
           <StoreResultsRow
             {...props}
-            key = {`table-${JSON.stringify(location)}-${index}`}
+            key = {`table-${JSON.stringify(location)}`}
             location = {location}
             index = {index}
           />
