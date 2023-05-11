@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/esm/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -15,7 +16,8 @@ export default function StorePicker(props) {
     zipCode, setZipCode,
     radius, setRadius,
     locations, setLocations,
-    invalidZipCode
+    invalidZipCode,
+    storeID: props.storeID, setStoreID: props.setStoreID
   }
   return (
     <div className='store-search-page'>
@@ -26,7 +28,7 @@ export default function StorePicker(props) {
 
 function StoreFinderForm(props) {
   return (
-    <div className="store-input-width">
+    <div className="store-element-width store-input-style">
       <InputGroup hasValidation>
         <Form.Control 
           type="search"
@@ -71,26 +73,38 @@ function StoreRadiusFilter(props) {
 
 function StoreResultsTable(props) {
   return (
-    <Table responsive hover>
-      <tbody>
-        {props.locations.map((location, index) => (
-          <StoreResultsRow
-            {...props}
-            key = {`table-${JSON.stringify(location)}`}
-            location = {location}
-            index = {index}
-          />
-        ))}
-      </tbody>
-    </Table>
+    <div className='store-element-width store-table-styling'>
+      <Table responsive hover>
+        <tbody>
+          {props.locations.map((location, index) => (
+            <StoreResultsRow
+              {...props}
+              key = {`table-${JSON.stringify(location)}`}
+              location = {location}
+              index = {index}
+            />
+          ))}
+        </tbody>
+      </Table>
+    </div>
   )
 }
 
 function StoreResultsRow(props) {
   return (
-    <tr>
-      <td><img src={props.location.thumbnail}/></td>
-      <td>{props.location.name}</td>
-    </tr>
+    <>
+      <tr className='table-spacer'><td className='non-hoverable-row'></td></tr>
+      <tr className='table-store-data hoverable-row'>
+        <td>
+          <img src={props.location.thumbnail}/> {props.location.name}
+          <div>
+            1 miles
+          </div>
+        </td>
+        <td className='store-right-column'>
+          <Button variant='light' onClick={() => props.setStoreID(props.location.locationID)}>Shop Here</Button>
+        </td>
+      </tr>
+    </>
   )
 }
