@@ -18,6 +18,7 @@ export function useLocations(zipCode, radiusInMiles) {
         }
         else {
             setInvalidZipCode(zipCode.length >= 5)
+            setLocations([])
         }
     }, [zipCode, radiusInMiles])
 
