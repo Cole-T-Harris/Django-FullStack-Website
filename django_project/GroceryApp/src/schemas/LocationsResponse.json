@@ -30,6 +30,9 @@
               "name": {
                 "type": "string"
               },
+              "thumbnail": {
+                "type": "string"
+              },
               "address": {
                 "type": "object",
                 "properties": {
