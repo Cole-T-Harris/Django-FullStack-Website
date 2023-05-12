@@ -9,5 +9,7 @@ export class Location {
         this.zipcode = locationObj.address.zipcode
         this.county = locationObj.address.county
         this.thumbnail = locationObj.thumbnail
+        this.latitude = locationObj.geolocation.latitude
+        this.longitude = locationObj.geolocation.longitude
     }
 }

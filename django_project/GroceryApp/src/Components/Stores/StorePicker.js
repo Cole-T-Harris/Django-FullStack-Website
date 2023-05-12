@@ -142,7 +142,7 @@ function StoreAdditionalInformation(props) {
 }
 
 function StoreLocation(props) {
-  const position = [51.505, -0.09]
+  const position = [props.location.latitude, props.location.longitude]
   return (
     <Map height={175} defaultCenter={position} defaultZoom={15}>
         <Marker width={28} anchor={position} />
