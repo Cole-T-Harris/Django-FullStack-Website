@@ -1,6 +1,8 @@
 from .store import Store, Address, Geolocation, WeekDayHours, WeekHours
 from .external_api_request import make_api_request
 from ..models import StoreThumbnail
+import pgeocode
+import geopy.distance
 
 def build_response(request):
     response = request
@@ -35,6 +37,7 @@ def build_response(request):
                                 location_hours)
             locations.append(current_location.__dict__)
         response["stores"] = locations
+        response["distances"] = get_distances(locations, response["zipCode.near"])
         return response
     else:
         return None
@@ -44,4 +47,15 @@ def get_store_thumbnail(branch):
     if len(query_result) < 1:
         return StoreThumbnail.objects.filter(branch = "KROGER")[0].thumbnail
     return query_result[0].thumbnail
+
+def get_distances(locations, zipcode):
+    nomi = pgeocode.Nominatim('us')
+    zipcode_latlong_dataframe = nomi.query_postal_code(zipcode)[['latitude','longitude']]
+    starting_coordinates = (zipcode_latlong_dataframe['latitude'], zipcode_latlong_dataframe['longitude'])
+    distances = []
+    for store in locations:
+        store_coordinates = (store["geolocation"]["latitude"], store["geolocation"]["longitude"])
+        distances.append(geopy.distance.geodesic(starting_coordinates, store_coordinates).miles)
+    return distances
+
     

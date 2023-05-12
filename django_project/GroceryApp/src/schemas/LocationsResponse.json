@@ -90,13 +90,21 @@
         "geolocation"
       ],
       "additionalProperties": false
+    },
+    "distances": {
+      "type":"array",
+      "items": {
+        "type":"number"
+      },
+      "minItems":0
     }
   },
   "required": [
     "zipCode.near",
     "radiusInMiles",
     "limit",
-    "stores"
+    "stores",
+    "distances"
   ],
   "additionalProperties": false
 }
