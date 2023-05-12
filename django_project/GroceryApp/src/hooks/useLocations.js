@@ -6,10 +6,12 @@ import { getByZipCode } from "zips"
 
 export function useLocations(zipCode, radiusInMiles) {
     const [locations, setLocations] = useState([])
+    const [distances, setDistances] = useState([])
     const [invalidZipCode, setInvalidZipCode] = useState()
     const storeAPIInfo = {
         zipCode, radiusInMiles,
-        stores: locations, setLocations: setLocations
+        stores: locations, setLocations: setLocations,
+        distances, setDistances
     }
     useEffect(() => {
         if (isValidZipCode(zipCode)) {
@@ -22,7 +24,7 @@ export function useLocations(zipCode, radiusInMiles) {
         }
     }, [zipCode, radiusInMiles])
 
-    return {locations: locations, setLocations: setLocations, invalidZipCode: invalidZipCode}
+    return {locations: locations, setLocations: setLocations, invalidZipCode: invalidZipCode, distances: distances}
 }
 
 async function makeStoreAPIRequest(info) {
@@ -34,6 +36,7 @@ async function makeStoreAPIRequest(info) {
 
     if (locationsResponse) {
         info.setLocations(makeLocationsList(locationsResponse))
+        info.setDistances(locationsResponse.distances)
     }
     else {
         LOG.error(`Locations request to ${getOriginalServerUrl()} failed. Check the log for more details.`, "error")

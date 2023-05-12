@@ -13,13 +13,14 @@ import { capitalizeFirstLetter } from '../../utils/modifiers'
 export default function StorePicker(props) {
   const [zipCode, setZipCode] = useState("")
   const [radius, setRadius] = useState(50)
-  const {locations, setLocations, invalidZipCode} = useLocations(zipCode, radius)
+  const {locations, setLocations, invalidZipCode, distances} = useLocations(zipCode, radius)
   const locationProps = {
     zipCode, setZipCode,
     radius, setRadius,
     locations, setLocations,
     invalidZipCode,
-    storeID: props.storeID, setStoreID: props.setStoreID
+    storeID: props.storeID, setStoreID: props.setStoreID,
+    distances
   }
   return (
     <div className='store-search-page'>
@@ -84,6 +85,7 @@ function StoreResultsTable(props) {
               key = {`table-${JSON.stringify(location)}`}
               location = {location}
               index = {index}
+              distance = {props.distances[index]}
             />
           ))}
         </tbody>
@@ -97,7 +99,7 @@ function StoreResultsRow(props) {
   return (
     <>
       <tr className='table-spacer'><td className='non-hoverable-row'></td></tr>
-      <tr className='table-store-data hoverable-row' onClick={() => setToggleRow(!toggleRow)}>
+      <tr className='table-store-data hoverable-row'>
         <td>
           <Table className='stores-row-table'>
             <tbody>
@@ -105,7 +107,7 @@ function StoreResultsRow(props) {
                 <td>
                   <img src={props.location.thumbnail}/> <strong>{props.location.name}</strong>
                   <div>
-                    1 miles
+                    {props.distance.toFixed(2)} miles
                   </div>
                 </td>
                 <td className='store-right-column'>
@@ -154,10 +156,13 @@ function StoreHours(props) {
   const hours = props.location.hours
   const dateList = []
   for (const day in hours) {
+    const openTime = convert24HrTo12HrTime(hours[day].open)
+    const closeTime = convert24HrTo12HrTime(hours[day].close)
+    const hoursDetails = (openTime === closeTime) ? "Open 24 Hours" : `${openTime} - ${closeTime}`
     dateList.push(
       <>
         <td className='store-hours-table-td'>{capitalizeFirstLetter(day)}</td> 
-        <td className='store-hours-table-td'>{convert24HrTo12HrTime(hours[day].open)} - {convert24HrTo12HrTime(hours[day].close)}</td>
+        <td className='store-hours-table-td'>{hoursDetails}</td>
       </>
     )
   }
