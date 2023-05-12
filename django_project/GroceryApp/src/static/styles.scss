@@ -34,6 +34,10 @@ $accent-color: #FCC2FC;
     margin: auto;
 }
 
+.store-hours-table-td {
+    padding-left: 0 !important;
+}
+
 .store-input-style {
     background-color: $secondary-color;
     border-radius: 15px;
@@ -53,7 +57,6 @@ $accent-color: #FCC2FC;
     text-align: right;
     width: 117px;
 }
-
 
 .table-spacer {
     background-color: $base-color;

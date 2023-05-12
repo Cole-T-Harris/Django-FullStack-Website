@@ -130,6 +130,9 @@ function StoreAdditionalInformation(props) {
           <div>
             <StoreLocation {...props}/>
             <strong>{props.location.streetAddress}</strong>
+            <div>
+              {props.location.city}, {props.location.state} {props.location.zipcode}
+            </div>
             <StoreHours {...props}/>
           </div>
         </Collapse>
@@ -181,15 +184,22 @@ function StoreHours(props) {
   const dateList = []
   for (const day in hours) {
     dateList.push(
-      capitalizeFirstLetter(day) + " " + convert24HrTo12HrTime(hours[day].open) + " - " + convert24HrTo12HrTime(hours[day].close)
+      <>
+        <td className='store-hours-table-td'>{capitalizeFirstLetter(day)}</td> 
+        <td className='store-hours-table-td'>{convert24HrTo12HrTime(hours[day].open)} - {convert24HrTo12HrTime(hours[day].close)}</td>
+      </>
     )
   }
   return (
-    <>
+    <Table className='stores-row-table'>
+      <tbody>
       {dateList.map((weekdayHours, index) =>
-        <div key={weekdayHours}>{weekdayHours}</div>
+        <tr key={`${props.location.name}-hours-${index}`}>
+          {weekdayHours}
+        </tr>
       )}
-    </>
+      </tbody>
+    </Table>
   )
 }
 
