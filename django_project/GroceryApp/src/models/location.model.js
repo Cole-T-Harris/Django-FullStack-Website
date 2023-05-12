@@ -11,5 +11,6 @@ export class Location {
         this.thumbnail = locationObj.thumbnail
         this.latitude = locationObj.geolocation.latitude
         this.longitude = locationObj.geolocation.longitude
+        this.hours = locationObj.hours
     }
 }

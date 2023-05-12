@@ -151,36 +151,7 @@ function StoreLocation(props) {
 }
 
 function StoreHours(props) {
-  const hours = {
-    monday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    tuesday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    wednesday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    thursday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    friday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    saturday: {
-      open: "06:00",
-      close: "23:00"
-    },
-    sunday: {
-      open: "06:00",
-      close: "23:00"
-    }
-  }
+  const hours = props.location.hours
   const dateList = []
   for (const day in hours) {
     dateList.push(
