@@ -30,7 +30,7 @@ $accent-color: #FCC2FC;
 }
 
 .store-element-width {
-    width: 80%;
+    width: 92%;
     margin: auto;
 }
 
@@ -50,9 +50,10 @@ $accent-color: #FCC2FC;
 }
 
 .store-right-column {
-    width: 117px;
     text-align: right;
+    width: 117px;
 }
+
 
 .table-spacer {
     background-color: $base-color;
@@ -62,16 +63,16 @@ $accent-color: #FCC2FC;
     background-color: $secondary-color;
 }
 
+table.stores-table td {
+    border-radius: 10px;
+}
+
+table.stores-row-table {
+    margin-bottom: 0;
+}
+
 td {
     border: 0;
-}
-
-td:first-child {
-    border-radius: 10px 0 0 10px;
-}
-
-td:last-child {
-    border-radius: 0 10px 10px 0;
 }
 
 @media screen and (min-width: 1200px) {
