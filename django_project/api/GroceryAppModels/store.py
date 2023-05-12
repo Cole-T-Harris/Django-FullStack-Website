@@ -16,14 +16,21 @@ class Address(dict):
     def __str__(self):
         return self.streetAddress + ", " + self.city + ", " + self.state + ", " + self.zipcode
 
+class Geolocation(dict):
+    def __init__(self, latitude, longitude):
+        self.latitude = latitude
+        self.longitude = longitude
+        dict.__init__(self, latitude=latitude, longitude=longitude)
+
 class Store(dict):
-    def __init__(self, location_id, chain, name, address, thumbnail):
+    def __init__(self, location_id, chain, name, address, geolocation, thumbnail):
         self.location_id = location_id
         self.chain = chain
         self.name = name
         self.address = address
+        self.geolocation = geolocation
         self.thumbnail = thumbnail
-        dict.__init__(self,location_id=location_id, chain=chain, name=name, address=address, thumbnail=thumbnail)
+        dict.__init__(self,location_id=location_id, chain=chain, name=name, address=address, geolocation=geolocation, thumbnail=thumbnail)
 
     def __str__(self):
         return self.name

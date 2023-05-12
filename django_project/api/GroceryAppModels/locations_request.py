@@ -1,4 +1,4 @@
-from .store import Store, Address
+from .store import Store, Address, Geolocation
 from .external_api_request import make_api_request
 from ..models import StoreThumbnail
 
@@ -15,10 +15,14 @@ def build_response(request):
                                     location_address_data["state"],
                                     location_address_data["zipCode"],
                                     location_address_data["county"])
+            location_geolocation_data = location["geolocation"]
+            location_geolocation = Geolocation(location_geolocation_data["latitude"],
+                                               location_geolocation_data["longitude"])
             current_location = Store(location["locationId"],
                                 location["chain"],
                                 location["name"],
                                 location_address,
+                                location_geolocation,
                                 get_store_thumbnail(location["chain"]))
             locations.append(current_location.__dict__)
         response["stores"] = locations

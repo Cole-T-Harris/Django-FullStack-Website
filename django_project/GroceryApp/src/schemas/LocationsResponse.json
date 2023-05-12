@@ -59,10 +59,33 @@
                   "zipcode",
                   "county"
                 ]
+              },
+              "geolocation": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ]
               }
             }
         },
-        "minItems": 0
+        "minItems": 0,
+        "required": [
+          "location_id",
+          "chain",
+          "name",
+          "thumbnail",
+          "address",
+          "geolocation"
+        ]
       }
     },
     "required": [
