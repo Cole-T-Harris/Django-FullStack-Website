@@ -1,4 +1,4 @@
-from .store import Store, Address, Geolocation
+from .store import Store, Address, Geolocation, WeekDayHours, WeekHours
 from .external_api_request import make_api_request
 from ..models import StoreThumbnail
 
@@ -18,12 +18,21 @@ def build_response(request):
             location_geolocation_data = location["geolocation"]
             location_geolocation = Geolocation(location_geolocation_data["latitude"],
                                                location_geolocation_data["longitude"])
+            location_hours_data = location["hours"]
+            location_hours = WeekHours(WeekDayHours(location_hours_data["monday"]["open"], location_hours_data["monday"]["close"]),
+                                       WeekDayHours(location_hours_data["tuesday"]["open"], location_hours_data["tuesday"]["close"]),
+                                       WeekDayHours(location_hours_data["wednesday"]["open"], location_hours_data["wednesday"]["close"]),
+                                       WeekDayHours(location_hours_data["thursday"]["open"], location_hours_data["thursday"]["close"]),
+                                       WeekDayHours(location_hours_data["friday"]["open"], location_hours_data["friday"]["close"]),
+                                       WeekDayHours(location_hours_data["saturday"]["open"], location_hours_data["saturday"]["close"]),
+                                       WeekDayHours(location_hours_data["sunday"]["open"], location_hours_data["sunday"]["close"]))
             current_location = Store(location["locationId"],
                                 location["chain"],
                                 location["name"],
                                 location_address,
                                 location_geolocation,
-                                get_store_thumbnail(location["chain"]))
+                                get_store_thumbnail(location["chain"]),
+                                location_hours)
             locations.append(current_location.__dict__)
         response["stores"] = locations
         return response
