@@ -9,7 +9,7 @@ import {Helmet} from "react-helmet"
 export default function App() {
   const [showList, setShowList] = useState(false)
   const [groceryListNumber, setGroceryListNumber] = useState(0)
-  const [storeName, setStoreName] = useState("Example Name")
+  const [storeName, setStoreName] = useState("")
   const [storeID, setStoreID] = useState("")
   const context = {
     showList, setShowList,

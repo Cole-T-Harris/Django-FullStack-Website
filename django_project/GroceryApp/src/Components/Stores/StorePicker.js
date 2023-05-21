@@ -20,6 +20,8 @@ export default function StorePicker(props) {
     locations, setLocations,
     invalidZipCode,
     storeID: props.storeID, setStoreID: props.setStoreID,
+    storeName: props.storeName, setStoreName: props.setStoreName,
+    showList: props.showList, setShowList: props.setShowList,
     distances
   }
   return (
@@ -96,6 +98,11 @@ function StoreResultsTable(props) {
 
 function StoreResultsRow(props) {
   const [toggleRow, setToggleRow] = useState(false)
+  const handleLocationSelect = (location) => {
+    props.setStoreID(location.locationID)
+    props.setStoreName(location.name)
+    props.setShowList(!props.showList)
+  }
   return (
     <>
       <tr className='table-spacer'><td className='non-hoverable-row'></td></tr>
@@ -111,7 +118,7 @@ function StoreResultsRow(props) {
                   </div>
                 </td>
                 <td className='store-right-column'>
-                  <Button variant='light' onClick={() => props.setStoreID(props.location.locationID)}>Shop Here</Button>
+                  <Button variant='light' onClick={() => handleLocationSelect(props.location)}>Shop Here</Button>
                   <Button variant='link' size="sm" onClick={() => setToggleRow(!toggleRow)}>Store Details</Button>
                 </td>
               </tr>
