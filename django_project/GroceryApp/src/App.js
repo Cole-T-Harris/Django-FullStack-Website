@@ -8,12 +8,12 @@ import {Helmet} from "react-helmet"
 
 export default function App() {
   const [showList, setShowList] = useState(false)
-  const [groceryListNumber, setGroceryListNumber] = useState(0)
+  const [showItemSearch, setShowItemSearch] = useState(false)
   const [storeName, setStoreName] = useState("")
   const [storeID, setStoreID] = useState("")
   const context = {
     showList, setShowList,
-    groceryListNumber, setGroceryListNumber,
+    showItemSearch, setShowItemSearch,
     storeName, setStoreName,
     storeID, setStoreID
   }
