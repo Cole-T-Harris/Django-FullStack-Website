@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table'
 import { useLocations } from '../../hooks/useLocations'
 import { Map, Marker } from "pigeon-maps"
 import { capitalizeFirstLetter } from '../../utils/modifiers'
+import NoLocation from '../../static/images/location_not_found.svg'
 
 export default function StorePicker(props) {
   const [zipCode, setZipCode] = useState("")
@@ -77,6 +78,15 @@ function StoreRadiusFilter(props) {
 }
 
 function StoreResultsTable(props) {
+  if (!props.invalidZipCode && props.locations.length === 0 && props.zipCode.length === 5) {
+    return (
+      <div className='store-element-width no-locations-result'>
+        <h2>No locations found.</h2>
+        <p>Try increasing radius or searching a different zipcode.</p>
+        <img src={NoLocation}/>
+      </div>
+    )
+  }
   return (
     <div className='store-element-width store-table-styling'>
       <Table responsive hover className='stores-table'>

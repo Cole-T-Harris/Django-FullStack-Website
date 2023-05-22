@@ -25,6 +25,10 @@ $accent-color: #FCC2FC;
     cursor: pointer;
 }
 
+.no-locations-result {
+    padding-top: 10px;
+}
+
 .non-hoverable-row:hover {
     box-shadow: none !important;
 }
