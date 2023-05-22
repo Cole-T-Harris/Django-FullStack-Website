@@ -1,13 +1,24 @@
 import React from 'react'
 import Button from 'react-bootstrap/esm/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
-import Form from 'react-bootstrap/Form'
+import { Fab } from 'react-tiny-fab'
 import ItemSearchModal from './ItemSearchModal'
+import {FaSearchPlus} from "react-icons/fa"
+import { FAB_STYLING, ACCENT_COLOR } from '../../utils/constants'
+import EmptyListIcon from '../../static/images/empty_data_icon.svg'
 
 export default function List(props) {
   if (props.storeID) {
     return (
-      <GroceryListPlanner {...props}/>
+      <>
+        <GroceryListPlanner {...props}/>
+        <Fab
+          mainButtonStyles={FAB_STYLING}
+          icon={<FaSearchPlus/>}
+          text='Add Item'
+          onClick={() => props.setShowItemSearch(true)}
+        >
+        </Fab>
+      </>
     )
   }
   return (
@@ -27,8 +38,20 @@ export default function List(props) {
 function GroceryListPlanner(props) {
   return (
     <div className='store-search-page'>
-      <Button variant='light' onClick={() => props.setShowItemSearch(true)}>Add Item</Button>
+      <GroceryListTable {...props}/>
       <ItemSearchModal {...props}/>
     </div>
   )
+}
+
+function GroceryListTable(props) {
+  if (props.groceryList.length === 0) {
+    return (
+      <div>
+        <h2>Grocery List is Empty</h2>
+        <p>To add items to list, select the <FaSearchPlus style={{color: ACCENT_COLOR}}/> button</p>
+        <img src={EmptyListIcon} />
+      </div>
+    )
+  }
 }

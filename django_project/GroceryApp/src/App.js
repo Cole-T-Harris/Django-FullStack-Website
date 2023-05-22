@@ -5,22 +5,25 @@ import List from './Components/List/List'
 import Container from 'react-bootstrap/esm/Container'
 import Header from './Components/header/header'
 import {Helmet} from "react-helmet"
+import { HELMET_BACKGROUND } from './utils/constants'
 
 export default function App() {
   const [showList, setShowList] = useState(false)
   const [showItemSearch, setShowItemSearch] = useState(false)
   const [storeName, setStoreName] = useState("")
   const [storeID, setStoreID] = useState("")
+  const [groceryList, setGroceryList] = useState([])
   const context = {
     showList, setShowList,
     showItemSearch, setShowItemSearch,
     storeName, setStoreName,
-    storeID, setStoreID
+    storeID, setStoreID,
+    groceryList, setGroceryList
   }
   return (
     <div className='app-background'>
       <Helmet>
-        <style>{'body {background-color: #B5F1CC; '}</style>
+        <style>{HELMET_BACKGROUND}</style>
       </Helmet>
       <Header {...context}/>
       <Planner {...context}/>
