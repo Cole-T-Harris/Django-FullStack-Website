@@ -1,9 +1,9 @@
 import ulog from 'ulog';
 
-export const BASE_COLOR = "#B5F1CC"
-export const SECONDARY_COLOR = "#E5FDD1"
-export const THIRD_COLOR = "#C9F4AA"
-export const ACCENT_COLOR = "#FCC2FC"
+export const BASE_COLOR = "#EAFBEA"
+export const SECONDARY_COLOR = "#6F9A8D"
+export const THIRD_COLOR = "#1F6650"
+export const ACCENT_COLOR = "#EA5E5E"
 
 export const LOG = ulog("App");
 
