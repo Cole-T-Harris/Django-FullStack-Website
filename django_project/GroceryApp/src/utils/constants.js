@@ -11,6 +11,8 @@ export const LOG = ulog("App");
 
 export const LOCATIONS_LIMIT = 10;
 
+export const ITEMS_LIMIT = 10;
+
 export const HELMET_BACKGROUND = 'body {background-color: ' + BASE_COLOR + '; '
 
 export const ZIPCODE_REGEX = /^[0-9]{5}$/
