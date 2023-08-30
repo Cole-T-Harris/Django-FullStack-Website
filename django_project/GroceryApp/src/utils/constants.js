@@ -1,4 +1,6 @@
 import ulog from 'ulog';
+import React from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const BASE_COLOR = "#EAFBEA"
 export const SECONDARY_COLOR = "#6F9A8D"
@@ -18,3 +20,11 @@ export const FAB_STYLING = {
                                 right: 40,
                                 backgroundColor: ACCENT_COLOR
                             }
+
+export const Loading = () => {
+    return (
+        <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    )
+}

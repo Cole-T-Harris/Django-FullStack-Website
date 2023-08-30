@@ -10,11 +10,12 @@ import { useLocations } from '../../hooks/useLocations'
 import { Map, Marker } from "pigeon-maps"
 import { capitalizeFirstLetter } from '../../utils/modifiers'
 import NoLocation from '../../static/images/location_not_found.svg'
+import { Loading } from '../../utils/constants'
 
 export default function StorePicker(props) {
   const [zipCode, setZipCode] = useState("")
   const [radius, setRadius] = useState(50)
-  const {locations, setLocations, invalidZipCode, distances} = useLocations(zipCode, radius)
+  const {locations, setLocations, invalidZipCode, distances, loading} = useLocations(zipCode, radius)
   const locationProps = {
     zipCode, setZipCode,
     radius, setRadius,
@@ -23,7 +24,8 @@ export default function StorePicker(props) {
     storeID: props.storeID, setStoreID: props.setStoreID,
     storeName: props.storeName, setStoreName: props.setStoreName,
     showList: props.showList, setShowList: props.setShowList,
-    distances
+    distances,
+    loading
   }
   return (
     <div className='store-search-page'>
@@ -78,7 +80,12 @@ function StoreRadiusFilter(props) {
 }
 
 function StoreResultsTable(props) {
-  if (!props.invalidZipCode && props.locations.length === 0 && props.zipCode.length === 5) {
+  if (props.loading) {
+    return (
+      <Loading/>
+    )
+  }
+  if (!props.loading && !props.invalidZipCode && props.locations.length === 0 && props.zipCode.length === 5) {
     return (
       <div className='store-element-width no-locations-result'>
         <h2>No locations found.</h2>

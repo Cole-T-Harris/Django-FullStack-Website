@@ -8,10 +8,12 @@ export function useLocations(zipCode, radiusInMiles) {
     const [locations, setLocations] = useState([])
     const [distances, setDistances] = useState([])
     const [invalidZipCode, setInvalidZipCode] = useState()
+    const [loading, setLoading] = useState(false)
     const storeAPIInfo = {
         zipCode, radiusInMiles,
         stores: locations, setLocations: setLocations,
-        distances, setDistances
+        distances, setDistances,
+        loading, setLoading
     }
     useEffect(() => {
         if (isValidZipCode(zipCode)) {
@@ -24,7 +26,7 @@ export function useLocations(zipCode, radiusInMiles) {
         }
     }, [zipCode, radiusInMiles])
 
-    return {locations: locations, setLocations: setLocations, invalidZipCode: invalidZipCode, distances: distances}
+    return {locations: locations, setLocations: setLocations, invalidZipCode: invalidZipCode, distances: distances, loading: loading}
 }
 
 async function makeStoreAPIRequest(info) {
@@ -32,8 +34,8 @@ async function makeStoreAPIRequest(info) {
                           "zipCode.near": info.zipCode, 
                           radiusInMiles: info.radiusInMiles,
                           limit: LOCATIONS_LIMIT}
+    info.setLoading(true)
     const locationsResponse = await sendGETAPIRequest(requestBody, getOriginalServerUrl())
-
     if (locationsResponse) {
         info.setLocations(makeLocationsList(locationsResponse))
         info.setDistances(locationsResponse.distances)
@@ -41,6 +43,7 @@ async function makeStoreAPIRequest(info) {
     else {
         LOG.error(`Locations request to ${getOriginalServerUrl()} failed. Check the log for more details.`, "error")
     }
+    info.setLoading(false)
 }
 
 function makeLocationsList(locationsResponse) {
