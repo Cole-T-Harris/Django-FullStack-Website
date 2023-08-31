@@ -5,9 +5,8 @@ import pgeocode
 import geopy.distance
 
 def build_response(request):
-    response = request
     locations = []
-    locations_response = make_api_request("locations", response)
+    locations_response = make_api_request("locations", request)
     if locations_response:
         locations_data = locations_response.json()['data']
         for location in locations_data:
@@ -36,6 +35,7 @@ def build_response(request):
                                 get_store_thumbnail(location["chain"]),
                                 location_hours)
             locations.append(current_location.__dict__)
+        response = request
         response["stores"] = locations
         response["distances"] = get_distances(locations, response["zipCode.near"])
         return response
