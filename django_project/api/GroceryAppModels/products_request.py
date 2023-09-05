@@ -12,8 +12,8 @@ def build_response(request):
         for product in products_response.json()["data"]:
             product_images_array = product["images"]
             product_images = build_product_images(product_images_array)
-            product_prices = Product_Price(product["items"][0]["price"]["regular"], 
-                                           product["items"][0]["price"]["promo"])
+            product_prices = Product_Price(product.get("items", [{}])[0].get("price", {}).get("regular", 0.00), 
+                                           product.get("items", [{}])[0].get("price", {}).get("promo", 0.00))
             product_object = Product(product.get("aisleLocations", []),
                                      product.get("brand", ""),
                                      product.get("countryOrigin", ""),
