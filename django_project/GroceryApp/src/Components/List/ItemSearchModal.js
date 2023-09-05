@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from 'react-bootstrap/esm/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
-import {FaSearchPlus} from "react-icons/fa"
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { useItems } from "../../hooks/useItems";
 
 export default function ItemSearchModal(props) {
     const handleClose = () => props.setShowItemSearch(false)
+    const [searchPressed, setSearchPressed] = useState(false)
+    const [itemSearchTerm, setItemSearchTerm] = useState("")
+    const {items, setItems, totalResults, loading} = useItems(props.storeID, itemSearchTerm, 0, searchPressed)
+    console.log(items, totalResults, loading)
     return (
         <Modal 
             show={props.showItemSearch}
@@ -19,10 +20,12 @@ export default function ItemSearchModal(props) {
                 Search Items @ {props.storeName}
             </Modal.Header>
             <Modal.Body>
-                <GroceryListSearch {...props} />
+                <GroceryListSearch term={itemSearchTerm} setTerm={setItemSearchTerm} />
             </Modal.Body>
             <Modal.Footer>
-                <Button>
+                <Button
+                onClick={() => setSearchPressed(!searchPressed)}
+                >
                     Search
                 </Button>
             </Modal.Footer>
@@ -32,19 +35,16 @@ export default function ItemSearchModal(props) {
 
 function GroceryListSearch(props) {
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <InputGroup>
-                        <Form.Control
-                        placeholder='Search For Items'
-                        />
-                        <Button variant='light'>
-                        <FaSearchPlus/>
-                        </Button>
-                    </InputGroup>
-                </Col>
-            </Row>
-        </Container>
+        <InputGroup>
+            <Form.Control
+            placeholder='Search For Items'
+            onChange={(e) => props.setTerm(e.target.value)}
+            value={props.itemSearchTerm}
+            />
+        </InputGroup>
     )
-  }
+}
+
+function ItemSearchResultsTable(props) {
+
+}

@@ -1,9 +1,11 @@
 import Ajv from 'ajv';
 import * as locationsSchema from '../schemas/LocationsResponse.json';
+import * as productsSchema from '../schemas/ProductsResponse.json'
 import { LOG } from "./constants";
 
 const SCHEMAS = {
-    locations: locationsSchema
+    locations: locationsSchema,
+    products: productsSchema
 }
 
 export async function sendGETAPIRequest(requestBody, serverUrl) {
