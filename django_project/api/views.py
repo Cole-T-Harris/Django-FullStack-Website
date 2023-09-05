@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError, HttpResponse
 import json
 import logging
-from .GroceryAppModels import locations_request
+from .GroceryAppModels import locations_request, products_request
 
 VALID_LOCATIONS_KEYS = {"zipCode.near", "radiusInMiles", "limit"}
-REQUESTTYPE_PARAMS = {"locations": VALID_LOCATIONS_KEYS}
+VALID_PRODUCTS_KEYS = {"term", "locationId", "start", "limit"}
+REQUESTTYPE_PARAMS = {"locations": VALID_LOCATIONS_KEYS, "products": VALID_PRODUCTS_KEYS}
 LOGGER = logging.getLogger(__name__)
 
 def validate_get_request(request_data, request_type):
@@ -43,3 +44,7 @@ def build_json_response(request, type, build_response):
 def locations_response(request):
     if request.method == "GET":
         return build_json_response(request, type='locations', build_response = locations_request.build_response)
+    
+def products_response(request):
+    if request.method == "GET":
+        return build_json_response(request, type='products', build_response=products_request.build_response)

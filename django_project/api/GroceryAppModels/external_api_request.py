@@ -2,13 +2,13 @@ import requests
 import base64
 from . import Credentials
 from django.core.cache import cache
-from django.contrib.sessions.backends.cache import SessionStore
 import logging
 
-BASE_KROGER_URL = "https://api-ce.kroger.com/v1/"
+BASE_KROGER_URL = "https://api.kroger.com/v1/"
 KROGER_LOCATIONS_CACHE_KEY = 'kroger_stores_token'
-SCOPE = {KROGER_LOCATIONS_CACHE_KEY: ''}
-CACHE_KEYS = {"locations": KROGER_LOCATIONS_CACHE_KEY}
+KROGER_PRODUCTS_CACHE_KEY = 'kroger_products_token'
+SCOPE = {KROGER_LOCATIONS_CACHE_KEY: '', KROGER_PRODUCTS_CACHE_KEY: 'product.compact'}
+CACHE_KEYS = {"locations": KROGER_LOCATIONS_CACHE_KEY, "products": KROGER_PRODUCTS_CACHE_KEY}
 LOGGER = logging.getLogger(__name__)
 
 def get_access_token(token_cache_key, session):
@@ -39,10 +39,11 @@ def get_access_token(token_cache_key, session):
             cache.set(token_cache_key, token, response.json()['expires_in'])
         else:
             return None
-    return {'Accept': 'application/json; charset=utf-8',
+    return {'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive', 
-            'Authorization': 'Bearer {}'.format(token)}
+            'Authorization': f'Bearer {token}',
+            'Cache-Control': 'no-chache'}
 
 def make_api_request(type, request):
     #initialize a session for a request
