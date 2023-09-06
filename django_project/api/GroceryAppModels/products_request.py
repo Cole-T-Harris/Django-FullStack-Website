@@ -10,20 +10,22 @@ def build_response(request):
     response = request
     if products_response:
         for product in products_response.json()["data"]:
-            product_images_array = product["images"]
-            product_images = build_product_images(product_images_array)
-            product_prices = Product_Price(product.get("items", [{}])[0].get("price", {}).get("regular", 0.00), 
-                                           product.get("items", [{}])[0].get("price", {}).get("promo", 0.00))
-            product_object = Product(product.get("aisleLocations", []),
-                                     product.get("brand", ""),
-                                     product.get("countryOrigin", ""),
-                                     product.get("description", ""),
-                                     product_images,
-                                     product.get("items", [{}])[0].get("inventory", {}).get("stockLevel", ""),
-                                     product_prices,
-                                     product.get("items", [{}])[0].get("size", ""),
-                                     product.get("items", [{}])[0].get("soldBy", ""))
-            products.append(product_object)
+            if ("productId" in product):
+                product_images_array = product["images"]
+                product_images = build_product_images(product_images_array)
+                product_prices = Product_Price(product.get("items", [{}])[0].get("price", {}).get("regular", 0.00), 
+                                            product.get("items", [{}])[0].get("price", {}).get("promo", 0.00))
+                product_object = Product(product.get("productId"),
+                                        product.get("aisleLocations", []),
+                                        product.get("brand", ""),
+                                        product.get("countryOrigin", ""),
+                                        product.get("description", ""),
+                                        product_images,
+                                        product.get("items", [{}])[0].get("inventory", {}).get("stockLevel", ""),
+                                        product_prices,
+                                        product.get("items", [{}])[0].get("size", ""),
+                                        product.get("items", [{}])[0].get("soldBy", ""))
+                products.append(product_object)
         response["products"] = products
         response["meta"] = products_response.json()["meta"]
     return response

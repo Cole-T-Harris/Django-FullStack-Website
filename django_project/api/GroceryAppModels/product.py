@@ -1,4 +1,5 @@
 class Product(dict):
+    productId=""
     aisleLocations = ""
     brand = ""
     countryOrigin = ""
@@ -8,7 +9,8 @@ class Product(dict):
     prices = ""
     size = ""
     priceSize = ""
-    def __init__(self, 
+    def __init__(self,
+                 productId, 
                  aisleLocations, 
                  brand, 
                  countryOfOrigin, 
@@ -27,7 +29,7 @@ class Product(dict):
         self.prices = prices
         self.size = size
         self.priceSize = priceSize
-        dict.__init__(self, aisleLocations=aisleLocations, brand=brand, countryOfOrigin=countryOfOrigin, description=description, images=images, stock=stock, prices=prices, size=size, priceSize=priceSize)
+        dict.__init__(self, productId=productId, aisleLocations=aisleLocations, brand=brand, countryOfOrigin=countryOfOrigin, description=description, images=images, stock=stock, prices=prices, size=size, priceSize=priceSize)
 
 class Product_Images(dict):
     thumbnail = ""
