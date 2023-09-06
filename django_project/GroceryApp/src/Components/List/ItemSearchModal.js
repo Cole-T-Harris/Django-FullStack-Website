@@ -141,10 +141,14 @@ function ItemStockLevel(props) {
 }
 
 export function ItemAdditionButton(props) {
-  const [quantity, setQuantity] = useState(props.product.quantity);
-  const isProductInGroceryList = props.groceryList.some(
+  const productIndex = props.groceryList.findIndex(
     (item) => item.productId === props.product.productId
   );
+  let startingQuantity = 0
+  if (productIndex > -1) {
+    startingQuantity = props.groceryList[productIndex].quantity
+  }
+  const [quantity, setQuantity] = useState(startingQuantity);
 
   const handleQuantityChange = (e) => {
     const changedValue = parseInt(e.target.value);
@@ -157,7 +161,7 @@ export function ItemAdditionButton(props) {
     const updatedProduct = { ...props.product, quantity };
 
     // If the product is already in the list, just update its quantity
-    if (isProductInGroceryList) {
+    if (productIndex > -1) {
       const updatedList = props.groceryList.map((item) =>
         item.productId === updatedProduct.productId ? updatedProduct : item
       );
@@ -178,11 +182,10 @@ export function ItemAdditionButton(props) {
       }
     }
   };
-
   useEffect(() => {
     addToGroceryList();
   }, [quantity]);
-  if (isProductInGroceryList) {
+  if (productIndex > -1) {
     return (
       <Form>
         <Form.Group className="d-flex align-items-center">
