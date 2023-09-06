@@ -25,6 +25,9 @@
         "items": {
             "type": "object",
             "properties": {
+                "productId": {
+                    "type": "string"
+                    },
               "aisleLocations": {
                 "type": "array",
                 "items": {

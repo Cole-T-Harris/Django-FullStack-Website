@@ -1,5 +1,6 @@
 export class Item {
     constructor(itemObj) {
+        this.productId = itemObj.productId
         this.aisleLocations = itemObj.aisleLocations
         this.brand = itemObj.brand
         this.countryOfOrigin = itemObj.countryOfOrigin
@@ -14,5 +15,6 @@ export class Item {
         this.promo = itemObj.prices.promo
         this.size = itemObj.size
         this.priceSize = itemObj.priceSize
+        this.quantity = 0
     }
 } 

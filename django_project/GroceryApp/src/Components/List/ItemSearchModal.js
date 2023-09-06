@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/esm/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
@@ -7,6 +7,7 @@ import { useItems } from "../../hooks/useItems";
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import { Loading } from '../../utils/constants'
+import { FaPlus, FaMinus } from "react-icons/fa"
 
 export default function ItemSearchModal(props) {
     const handleClose = () => props.setShowItemSearch(false)
@@ -23,7 +24,7 @@ export default function ItemSearchModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <GroceryListSearch term={itemSearchTerm} setTerm={setItemSearchTerm} />
-                <ItemSearchResultsTable {...itemsResponse} />
+                <ItemSearchResultsTable {...itemsResponse} {...props}/>
             </Modal.Body>
             <Modal.Footer>
                 <Button
@@ -54,6 +55,7 @@ function ItemSearchResultsTable(props) {
             <Loading/>
         )
     }
+    if (props.items)
     return(
         <Table striped>
             <thead></thead>
@@ -61,7 +63,9 @@ function ItemSearchResultsTable(props) {
                 {props.items.map((product, index) => (
                     <ItemSearchResultsTableRow
                         product={product}
-                        key={`table-${JSON.stringify(product)}`}
+                        groceryList={props.groceryList}
+                        setGroceryList={props.setGroceryList}
+                        key={`${product.productId}`}
                     />
                 ))}
             </tbody>
@@ -74,15 +78,11 @@ function ItemSearchResultsTableRow(props) {
     return (
         <tr>
             <td>
-                <Button 
-                    variant="secondary"
-                    size="sm"
-                >Add
-                </Button>
+                <ItemAdditionButton product={product} groceryList={props.groceryList} setGroceryList={props.setGroceryList}/>
                 <ItemStockLevel stock={product.stock}/>
             </td>
             <td>
-                <Image src={product?.thumbnail} />
+                <Image src={product?.thumbnail} className="product-thumbnail-size"/>
             </td>
             <td>
                 {product?.description}
@@ -94,19 +94,24 @@ function ItemSearchResultsTableRow(props) {
     )
 }
 
-function ItemDisplayPrice(props) {
+export function ItemDisplayPrice(props) {
+    let priceSize = ""
+    if (props.priceSize == "UNIT")
+        priceSize = "ea"
+    if (props.priceSize == "WEIGHT")
+        priceSize = "lb"
     if (props.promo > 0) {
         return (
             <p>
                 <del style={{color: "red"}}>${props.price}</del>
                 <span style={{color: "red"}}>${props.promo}</span>
-                / {props.priceSize}
+                / {priceSize}
             </p>
         )
     }
     if (props.price > 0) {
         return (
-            <p>${props.price} / {props.priceSize}</p>
+            <p>${props.price} / {priceSize}</p>
         )
     }
     return (
@@ -133,4 +138,92 @@ function ItemStockLevel(props) {
     return (
         <p></p>
     )
+}
+
+export function ItemAdditionButton(props) {
+  const [quantity, setQuantity] = useState(props.product.quantity);
+  const isProductInGroceryList = props.groceryList.some(
+    (item) => item.productId === props.product.productId
+  );
+
+  const handleQuantityChange = (e) => {
+    const changedValue = parseInt(e.target.value);
+    if (changedValue >= 0 && changedValue <= 99) {
+      setQuantity(changedValue);
+    }
+  };
+
+  const addToGroceryList = () => {
+    const updatedProduct = { ...props.product, quantity };
+
+    // If the product is already in the list, just update its quantity
+    if (isProductInGroceryList) {
+      const updatedList = props.groceryList.map((item) =>
+        item.productId === updatedProduct.productId ? updatedProduct : item
+      );
+
+      // Remove the item if quantity is reduced to 0
+      if (quantity === 0) {
+        const filteredList = updatedList.filter(
+          (item) => item.productId !== updatedProduct.productId
+        );
+        props.setGroceryList(filteredList);
+      } else {
+        props.setGroceryList(updatedList);
+      }
+    } else {
+      // If the product is not in the list and quantity is greater than 0, add it
+      if (quantity > 0) {
+        props.setGroceryList([...props.groceryList, updatedProduct]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    addToGroceryList();
+  }, [quantity]);
+  if (isProductInGroceryList) {
+    return (
+      <Form>
+        <Form.Group className="d-flex align-items-center">
+          <FaMinus
+            size={15}
+            onClick={() => {
+              if (quantity > 0) {
+                setQuantity(quantity - 1);
+              }
+            }}
+            color="#6c757d"
+          />
+          <Form.Control
+            style={{ width: "58px" }}
+            type="number"
+            value={quantity}
+            onChange={(e) => handleQuantityChange(e)}
+          />
+          <FaPlus
+            size={15}
+            onClick={() => {
+              if (quantity < 99) {
+                setQuantity(quantity + 1);
+              }
+            }}
+            color="#6c757d"
+          />
+        </Form.Group>
+      </Form>
+    );
+  } else {
+    return (
+      <Button
+        variant="secondary"
+        size="sm"
+        onClick={() => {
+          setQuantity(1);
+        }}
+      >
+        Add
+      </Button>
+    );
+  }
 }

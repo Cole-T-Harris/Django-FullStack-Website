@@ -82,6 +82,13 @@ td {
     border: 0;
 }
 
+.product-thumbnail-size {
+    max-width: 50px; /* Set the maximum width to 50 pixels */
+    max-height: 50px; /* Set the maximum height to 50 pixels */
+    width: auto; /* Automatically adjust width while maintaining aspect ratio */
+    height: auto; /* Automatically adjust height while maintaining aspect ratio */
+}
+
 @media screen and (min-width: 1200px) {
     .store-element-width {
         width: 50%;
