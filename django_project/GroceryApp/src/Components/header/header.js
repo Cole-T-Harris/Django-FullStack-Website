@@ -1,12 +1,20 @@
 import React from "react";
 import {FaList, FaSearchLocation, FaStore, FaStoreSlash} from "react-icons/fa"
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function Header(props) {
     return (
         <div className="header">
             <div className="header-icon">
-            <SelectedStoreDisplay {...props}/>
-            <ExitHeaderButton {...props}/>
+                <Row>
+                    <Col style={{textAlign: "left"}}>
+                        <SelectedStoreDisplay {...props}/>
+                    </Col>
+                    <Col style={{textAlign: "right"}}>
+                        <ExitHeaderButton {...props}/>
+                    </Col>
+                </Row>
             </div>
         </div>
     )

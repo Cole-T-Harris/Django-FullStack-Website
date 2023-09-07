@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import { Loading } from '../../utils/constants'
 import { FaPlus, FaMinus } from "react-icons/fa"
+import { BASE_COLOR } from "../../utils/constants";
 
 export default function ItemSearchModal(props) {
     const handleClose = () => props.setShowItemSearch(false)
@@ -103,8 +104,8 @@ export function ItemDisplayPrice(props) {
     if (props.promo > 0) {
         return (
             <p>
-                <del style={{color: "red"}}>${props.price}</del>
-                <span style={{color: "red"}}>${props.promo}</span>
+                <del style={{color: "#ff6561"}}>${props.price}</del>
+                <span>${props.promo}</span>
                 / {priceSize}
             </p>
         )
@@ -190,28 +191,26 @@ export function ItemAdditionButton(props) {
       <Form>
         <Form.Group className="d-flex align-items-center">
           <FaMinus
-            size={15}
+            size={14}
             onClick={() => {
               if (quantity > 0) {
                 setQuantity(quantity - 1);
               }
             }}
-            color="#6c757d"
           />
           <Form.Control
             style={{ width: "58px" }}
             type="number"
-            value={quantity}
+            value={props.groceryList[productIndex].quantity}
             onChange={(e) => handleQuantityChange(e)}
           />
           <FaPlus
-            size={15}
+            size={14}
             onClick={() => {
               if (quantity < 99) {
                 setQuantity(quantity + 1);
               }
             }}
-            color="#6c757d"
           />
         </Form.Group>
       </Form>
