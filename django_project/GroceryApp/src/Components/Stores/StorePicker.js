@@ -24,6 +24,7 @@ export default function StorePicker(props) {
     storeID: props.storeID, setStoreID: props.setStoreID,
     storeName: props.storeName, setStoreName: props.setStoreName,
     showList: props.showList, setShowList: props.setShowList,
+    groceryList: props.groceryList, setGroceryList: props.setGroceryList,
     distances,
     loading
   }
@@ -113,12 +114,25 @@ function StoreResultsTable(props) {
   )
 }
 
+function changingStoreWarning() {
+  const userConfirmed =  window.confirm("Changing the store will result in the loss of your grocery list. Do you wish to continue?");
+  return userConfirmed
+}
+
 function StoreResultsRow(props) {
   const [toggleRow, setToggleRow] = useState(false)
   const handleLocationSelect = (location) => {
-    props.setStoreID(location.locationID)
-    props.setStoreName(location.name)
-    props.setShowList(!props.showList)
+    if (!props.storeID) {
+      props.setStoreID(location.locationID)
+      props.setStoreName(location.name)
+      props.setShowList(!props.showList)
+    }
+    else if (changingStoreWarning()) {
+      props.setStoreID(location.locationID)
+      props.setStoreName(location.name)
+      props.setShowList(!props.showList)
+      props.setGroceryList([])
+    }
   }
   return (
     <>
