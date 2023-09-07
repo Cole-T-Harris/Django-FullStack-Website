@@ -8,7 +8,6 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import { Loading } from '../../utils/constants'
 import { FaPlus, FaMinus } from "react-icons/fa"
-import { BASE_COLOR } from "../../utils/constants";
 
 export default function ItemSearchModal(props) {
     const handleClose = () => props.setShowItemSearch(false)
@@ -29,6 +28,7 @@ export default function ItemSearchModal(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button
+                className="grocery-item-search-button"
                 onClick={() => setSearchPressed(!searchPressed)}
                 >
                     Search

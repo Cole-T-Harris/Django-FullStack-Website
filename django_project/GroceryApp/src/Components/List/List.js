@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/esm/Button'
 import { Fab } from 'react-tiny-fab'
 import ItemSearchModal, { ItemAdditionButton, ItemDisplayPrice } from './ItemSearchModal'
-import {FaChevronDown, FaSearchPlus, FaTrashAlt} from "react-icons/fa"
+import {FaChevronDown, FaChevronUp, FaSearchPlus, FaTrashAlt} from "react-icons/fa"
 import { FAB_STYLING, ACCENT_COLOR } from '../../utils/constants'
 import EmptyListIcon from '../../static/images/empty_data_icon.svg'
 import Table from 'react-bootstrap/esm/Table'
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/esm/Col'
+import Collapse from 'react-bootstrap/esm/Collapse'
+import Carousel from 'react-bootstrap/Carousel';
 
 export default function List(props) {
   if (props.storeID) {
@@ -61,7 +64,7 @@ function GroceryListTable(props) {
     )
   }
   return (
-    <Table hover className='rounded-table'>
+    <Table className='rounded-table'>
       <GroceryListTableHeader/>
       <tbody>
         {props.groceryList.map((product) => (
@@ -101,11 +104,13 @@ function GroceryListTableRow(props) {
     );
     props.setGroceryList(filteredList)
   }
+  const [toggleRow, setToggleRow] = useState(false)
+  const toggleRowId = props.product.productId
   return (
     <>
       <tr className='table-spacer'><td className='non-hoverable-row'></td></tr>
-      <tr className='hoverable-row'>
-        <td>
+      <tr className='hoverable-row' onClick={() => setToggleRow(!toggleRow)}>
+        <td style={{borderTopLeftRadius: "10px"}}>
           <ItemAdditionButton product={props.product} groceryList={props.groceryList} setGroceryList={props.setGroceryList}/>
         </td>
         <td>
@@ -117,11 +122,89 @@ function GroceryListTableRow(props) {
         <td>
           <ItemDisplayPrice price={props.product?.price} promo={props.product?.promo} priceSize={props.product?.priceSize}/>
         </td>
-        <td style={{textAlign: "right"}}>
-          <FaChevronDown />
+        <td style={{textAlign: "right", borderTopRightRadius: "10px"}}>
+          {toggleRow ? 
+            <FaChevronUp onClick={() => setToggleRow(!toggleRow)} aria-controls={toggleRowId}/> :
+            <FaChevronDown onClick={() => setToggleRow(!toggleRow)} aria-controls={toggleRowId}/>
+          }
         </td>
       </tr>
+      <GroceryListTableRowAdditionalInformation {...props} toggleRow={toggleRow} toggleRowId={toggleRowId} handleDelete={handleDelete}/>
     </>
+  )
+}
+
+function GroceryListTableRowAdditionalInformation(props) {
+  return (
+    <tr>
+      <td colSpan={5} style={{borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px"}}>
+        <Collapse in={props.toggleRow}> 
+          <div id={props.toggleRowId} >
+            <Row>
+              <Col sm={12} md={4}>
+                <div className='grocery-list-additional-background-left'>
+                  <GroceryListImageCarousel {...props}/>
+                </div>
+              </Col>
+              <Col sm={12} md={8}>
+                <div className='grocery-list-additional-background-right'>
+                  <strong>Brand</strong>
+                  <p>{props.product.brand}</p>
+                </div>
+                <div className='grocery-list-additional-background-right'>
+                  <strong>Origin</strong>
+                  <p>{props.product.countryOfOrigin}</p>
+                </div>
+                <div className='grocery-list-additional-background-right'>
+                  <strong>Size</strong>
+                  <p>{props.product.size}</p>
+                </div>
+                <div className='grocery-list-additional-background-right'>
+                  <strong>Store Location</strong>
+                  <GroceryListAisleInformation {...props}/>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <div style={{textAlign: "right"}}>
+                <Button variant='warning' onClick={() => {props.handleDelete()}}>
+                  <p><FaTrashAlt/> Remove Item</p>
+                </Button>
+              </div>
+            </Row>
+          </div>
+        </Collapse>
+      </td>
+    </tr>
+  )
+}
+
+function GroceryListAisleInformation(props) {
+  if (props.product.aisleLocations.length >= 1) {
+    return (
+      props.product.aisleLocations.map((location) => (
+        <div key={`${JSON.stringify(location)}`}>
+          <>{location?.description} {location.bayNumber ? `Bay: ${location.bayNumber}` : ""}</>
+        </div>
+      ))
+    )
+  }
+  return null
+}
+
+function GroceryListImageCarousel(props) {
+  const images = [props.product.frontImage, 
+    props.product.backImage, 
+    props.product.rightImage, 
+    props.product.leftImage].filter(image => image !== "")
+  return (
+    <Carousel>
+      {images.map((image, index) => (
+        <Carousel.Item key={`${props.product.productId}-${image}`}>
+          <Image src={image}/>
+        </Carousel.Item>
+      ))}
+    </Carousel>
   )
 }
 

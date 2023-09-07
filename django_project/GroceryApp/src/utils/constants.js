@@ -11,7 +11,7 @@ export const LOG = ulog("App");
 
 export const LOCATIONS_LIMIT = 10;
 
-export const ITEMS_LIMIT = 10;
+export const ITEMS_LIMIT = 7;
 
 export const HELMET_BACKGROUND = 'body {background-color: ' + BASE_COLOR + '; '
 
