@@ -12,6 +12,20 @@ $accent-color: #EA5E5E;
     z-index: 1;
 }
 
+.circular-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5em; /* Adjust the width as needed */
+    height: 2.5em; /* Adjust the height as needed */
+    border-radius: 50%;
+    background-color: $accent-color;
+}
+
+.circular-icon:hover {
+    background-color: #ff6f6f;
+}
+
 .grocery-item-search-button {
     background-color: $third-color;
     color: white;
@@ -102,6 +116,15 @@ $accent-color: #EA5E5E;
   .rounded-table tbody tr {
     background-color: $secondary-color;
   }
+
+.share-buttons-styling {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.share-button {
+    color: white;
+}
 
 .store-element-width {
     width: 92%;

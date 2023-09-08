@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/esm/Button'
 import { Fab } from 'react-tiny-fab'
 import ItemSearchModal, { ItemAdditionButton, ItemDisplayPrice } from './ItemSearchModal'
-import {FaChevronDown, FaChevronUp, FaSearchPlus, FaTrashAlt} from "react-icons/fa"
+import {FaChevronDown, FaChevronUp, FaCopy, FaSearchPlus, FaShare, FaTrashAlt} from "react-icons/fa"
 import { FAB_STYLING, ACCENT_COLOR } from '../../utils/constants'
 import EmptyListIcon from '../../static/images/empty_data_icon.svg'
 import Table from 'react-bootstrap/esm/Table'
@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/esm/Col'
 import Collapse from 'react-bootstrap/esm/Collapse'
 import Carousel from 'react-bootstrap/Carousel';
+import { sortAndFormatGroceryList } from '../../utils/modifiers'
 
 export default function List(props) {
   if (props.storeID) {
@@ -44,10 +45,53 @@ export default function List(props) {
 function GroceryListPlanner(props) {
   return (
     <div className='store-search-page'>
+      {props.groceryList.length > 0 ? 
+        <GroceryListShareCopyButtons {...props}/> :
+        <></>}
       <GroceryListTable {...props}/>
       <ItemSearchModal {...props}/>
       <Row>
         <GroceryListSubTotal groceryList={props.groceryList}/>
+      </Row>
+    </div>
+  )
+}
+
+function GroceryListShareCopyButtons(props) {
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Share via',
+          text: sortAndFormatGroceryList(props.groceryList),
+        });
+      } else {
+        // Fallback code for browsers that don't support Web Share API
+        // You can provide alternative sharing options here.
+        console.log('Web Share API not supported');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+  const copyTextToClipboard = () => {
+    const textToCopy = sortAndFormatGroceryList(props.groceryList)
+    navigator.clipboard.writeText(textToCopy)
+      .catch((err) => {
+        console.error('Unable to copy text: ', err);
+      });
+  };
+  return (
+    <div className='share-buttons-styling'>
+      <Row>
+        <Col>
+          <div className='circular-icon' style={{marginRight: "20px"}}>
+            <FaCopy className='share-button' onClick={() => copyTextToClipboard()} size={"1.5em"}/>
+          </div>
+          <div className='circular-icon'>
+            <FaShare className='share-button' onClick={() => handleShare()} size={"1.5em"}/>
+          </div>
+        </Col>
       </Row>
     </div>
   )

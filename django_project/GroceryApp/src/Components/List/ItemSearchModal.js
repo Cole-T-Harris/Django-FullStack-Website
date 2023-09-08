@@ -23,7 +23,7 @@ export default function ItemSearchModal(props) {
                 Search Items @ {props.storeName}
             </Modal.Header>
             <Modal.Body>
-                <GroceryListSearch term={itemSearchTerm} setTerm={setItemSearchTerm} />
+                <GroceryListSearch term={itemSearchTerm} setTerm={setItemSearchTerm} searchPressed={searchPressed} setSearchPressed={setSearchPressed} />
                 <ItemSearchResultsTable {...itemsResponse} {...props}/>
             </Modal.Body>
             <Modal.Footer>
@@ -39,11 +39,17 @@ export default function ItemSearchModal(props) {
 }
 
 function GroceryListSearch(props) {
+    const handleEnterPress = (e) => {
+      if (e.key === 'Enter') {
+        props.setSearchPressed(!props.searchPressed)
+      }
+    }
     return (
         <InputGroup>
             <Form.Control
             placeholder='Search For Items'
             onChange={(e) => props.setTerm(e.target.value)}
+            onKeyDown={(e) => handleEnterPress(e)}
             value={props.itemSearchTerm}
             />
         </InputGroup>
